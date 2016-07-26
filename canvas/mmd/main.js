@@ -84,7 +84,7 @@ tm.define("MikuOnStage", {
         hiyoko.vx = 1;
         hiyoko.vy = 1;
 
-        var btn = tm.ui.FlatButton({ text: "スタート" })
+        var btn = tm.ui.FlatButton({ text: "Play" })
             .setPosition(320, windowHeight * 0.5)
             .addChildTo(this)
             .on("push", function() {
