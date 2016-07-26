@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>小三角动画</title>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        background-color: #000;
+        color: greenyellow;
+    }
+    
+    .info {
+        width: 150px;
+        height: 131px;
+        position: relative;
+        margin: 100px auto;
+        cursor: pointer;
+        opacity: 0;
+    }
+    
+    .line {
+        position: absolute;
+        width: 0%;
+        height: 1px;
+        background-color: #fff;
+        transform-origin: 0 0;
+        transition: width 0.2s ease-in;
+    }
+    ul{margin:50px auto;width: 1200px;}
+    ul:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+    li{width: 300px;float: left;border:1px solid #666;box-sizing: border-box;list-style:none;}
+    
+    .line1 {
+        right: 0;
+    }
+    
+    .line2 {
+        left: 0;
+    }
+    
+    .line3 {
+        left: 50%;
+    }
+    
+    .circle {
+        position: absolute;
+    }
+    
+    .circle1 {
+        margin-left: -2px;
+        margin-top: -2px;
+        width: 4px;
+        height: 4px;
+        border-radius: 2px;
+        background-color: #fff;
+        opacity: 0;
+        transition-property: opacity;
+        transition-duration: 0.1s;
+        transition-delay: 0.2s;
+    }
+    
+    .circle2 {
+        margin-left: -6px;
+        margin-top: -6px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        border: 1px dashed #fff;
+        opacity: 0;
+        transition-property: opacity, transform;
+        transition-duration: 0.1s, 0.3s;
+        transition-delay: 0.3s, 0.4s;
+    }
+    
+    .line4 {
+        transform-origin: 0 0;
+        transition-property: width;
+        transition-duration: 0.2s;
+        transition-delay: 0.7s;
+    }
+    
+    .line5 {
+        transform-origin: 0 0;
+        transition-property: width;
+        transition-duration: 0.2s;
+        transition-delay: 0.9s;
+    }
+    
+    .word {
+        position: absolute;
+        width: 100%;
+        height: 0px;
+        line-height: 30px;
+        overflow: hidden;
+        color: #000;
+        background-color: #fff;
+        text-align: center;
+        transition-property: height, top;
+        transition-duration: 0.2s, 0.2s;
+        transition-delay: 1.1s, 1.1s;
+    }
+    
+    .info:hover {
+        opacity: 1;
+    }
+    
+    .info:hover .line {
+        width: 100%;
+        opacity: 1;
+    }
+    
+    .info:hover .circle1 {
+        opacity: 1;
+    }
+    
+    .info:hover .circle2 {
+        transform: rotate(180deg);
+        opacity: 1;
+    }
+    
+    .info:hover .word {
+        height: 30px;
+    }
+    
+    .info1 .line1 {
+        top: 0;
+    }
+    
+    .info1 .line2 {
+        top: 0;
+        transform: rotate(60deg);
+    }
+    
+    .info1 .line3 {
+        bottom: 0;
+        transform: rotate(-60deg);
+    }
+    
+    .info1 .circle1,
+    .info1 .circle2,
+    .info1 .line4 {
+        left: 50%;
+        top: 39%;
+    }
+    
+    .info1 .line4 {
+        transform: rotate(-34deg);
+    }
+    
+    .info1 .line5,
+    .info1 .word {
+        top: -34px;
+        left: 132%;
+    }
+    
+    .info1:hover .word {
+        top: -64px;
+    }
+    
+    .info2 .line1 {
+        bottom: 0;
+    }
+    
+    .info2 .line2 {
+        bottom: 0;
+        transform: rotate(-60deg);
+    }
+    
+    .info2 .line3 {
+        top: 0;
+        transform: rotate(60deg);
+    }
+    
+    .info2 .circle1,
+    .info2 .circle2,
+    .info2 .line4 {
+        left: 50%;
+        top: 61%;
+    }
+    
+    .info2 .line4 {
+        transform: rotate(-34deg);
+    }
+    
+    .info2 .line5,
+    .info2 .word {
+        top: -4px;
+        left: 132%;
+    }
+    
+    .info2:hover .word {
+        top: -34px;
+    }
+    
+    .info3 .line1 {
+        top: 0;
+    }
+    
+    .info3 .line2 {
+        top: 0;
+        transform: rotate(60deg);
+    }
+    
+    .info3 .line3 {
+        bottom: 0;
+        transform: rotate(-60deg);
+    }
+    
+    .info3 .circle1,
+    .info3 .circle2,
+    .info3 .line4 {
+        left: 50%;
+        top: 39%;
+    }
+    
+    .info3 .line5,
+    .info3 .word {
+        top: -34px;
+        right: 132%;
+    }
+    
+    .info3 .line4 {
+        transform: rotate(-146deg);
+    }
+    
+    .info3:hover .word {
+        top: -64px;
+    }
+    
+    .info4 .line1 {
+        bottom: 0;
+    }
+    
+    .info4 .line2 {
+        bottom: 0;
+        transform: rotate(-60deg);
+    }
+    
+    .info4 .line3 {
+        top: 0;
+        transform: rotate(60deg);
+    }
+    
+    .info4 .circle1,
+    .info4 .circle2,
+    .info4 .line4 {
+        left: 50%;
+        top: 61%;
+    }
+    
+    .info4 .line5,
+    .info4 .word {
+        top: -4px;
+        right: 132%;
+    }
+    
+    .info4 .line4 {
+        transform: rotate(-146deg);
+    }
+    
+    .info4:hover .word {
+        top: -34px;
+    }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>倒三角右上
+            <div class="info info1">
+                <div class="line line1"></div>
+                <div class="line line2"></div>
+                <div class="line line3"></div>
+                <div class="circle circle1"></div>
+                <div class="circle circle2"></div>
+                <div class="line line4"></div>
+                <div class="line line5"></div>
+                <div class="word">倒三角右上</div>
+            </div>
+        </li>
+        <li>正三角右上
+            <div class="info info2">
+                <div class="line line1"></div>
+                <div class="line line2"></div>
+                <div class="line line3"></div>
+                <div class="circle circle1"></div>
+                <div class="circle circle2"></div>
+                <div class="line line4"></div>
+                <div class="line line5"></div>
+                <div class="word">正三角右上</div>
+            </div>
+        </li>
+        <li>倒三角左上
+            <div class="info info3">
+                <div class="line line1"></div>
+                <div class="line line2"></div>
+                <div class="line line3"></div>
+                <div class="circle circle1"></div>
+                <div class="circle circle2"></div>
+                <div class="line line4"></div>
+                <div class="line line5"></div>
+                <div class="word">倒三角左上</div>
+            </div>
+        </li>
+        <li>正三角左上
+            <div class="info info4">
+                <div class="line line1"></div>
+                <div class="line line2"></div>
+                <div class="line line3"></div>
+                <div class="circle circle1"></div>
+                <div class="circle circle2"></div>
+                <div class="line line4"></div>
+                <div class="line line5"></div>
+                <div class="word">正三角左上</div>
+            </div>
+        </li>
+    </ul>
+    <p style="text-align: center">↑↑↑↑↑将鼠标移动到格子内↑↑↑↑↑</p>
+</body>
+
+</html>
