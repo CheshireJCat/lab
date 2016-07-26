@@ -16,12 +16,14 @@ tm.main(function() {
             //There is a need to specify the PMD and VMD together to play the MMD
             miku: {
                 type: "mmd",
-                //url: ["assets/pmd/miku_v2.pmd", "assets/pmd/jl2.vmd"],
-                url: ["http://o7ze2s1ph.bkt.clouddn.com/mmd/miku.pmd", "http://o7ze2s1ph.bkt.clouddn.com/mmd/jl2.vmd"],
+                url: ["assets/pmd/miku_v2.pmd", "http://o7ze2s1ph.bkt.clouddn.com/mmd/jl2.vmd"],
+                //url: ["http://o7ze2s1ph.bkt.clouddn.com/mmd/miku.pmd", "http://o7ze2s1ph.bkt.clouddn.com/mmd/jl2.vmd"],
             },
             //分けて読み込みも可能
-            haku:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/haku.pmd",
-            neru:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/neru.pmd",
+            haku:   "assets/pmd/haku.pmd",
+            //haku:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/haku.pmd",
+            neru:   "assets/pmd/neru.pmd",
+            //neru:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/neru.pmd",
             wave:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/jl2.vmd",
             wave2:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/jl1.vmd",
         },
