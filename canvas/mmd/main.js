@@ -20,10 +20,7 @@ tm.main(function() {
                 url: ["assets/pmd/miku.pmd", "assets/pmd/jl2.vmd"],
             },
             //分けて読み込みも可能
-            dummy:   "assets/pmd/dummy.pmd",
             haku:   "assets/pmd/haku.pmd",
-            kaito:   "assets/pmd/kaito.pmd",
-            meiko_sakine:   "assets/pmd/meiko_sakine.pmd",
             neru:   "assets/pmd/neru.pmd",
             wave:   "assets/pmd/jl2.vmd",
             wave2:   "assets/pmd/jl1.vmd",
@@ -38,7 +35,7 @@ tm.define("MikuOnStage", {
         this.superInit();
 
         // カメラ調整
-        this.camera.setPosition(40, 20, 0);
+        this.camera.setPosition(0, 10, 60);
         this.camera.lookAt(new THREE.Vector3(0, 15, 0));
         
         // ライトを動かす
@@ -47,33 +44,25 @@ tm.define("MikuOnStage", {
         // メッシュを表示する
         var miku = tm.hybrid.MMDMesh("miku")
             .addChildTo(this)
-            .setPosition(0, 0, 0)
+            .setPosition(0, 0, 20)
             .on("enterframe", function() {
-                if (this.rolling) this.rotationY += 0; // Y軸回転
+                if (this.rolling) this.rotationY += 180; // Y軸回転
             });
 
         //分割読み込みからメッシュを生成
         var neru = tm.hybrid.createMeshFromMMD("neru", "wave")
             .addChildTo(this)
-            .setPosition(0, 0, -10)
+            .setPosition(-20, 0, 0)
             .setRotation(0, 0, 0)
             .on("enterframe", function() {
-                if (this.rolling) this.rotationY += 0; // Y軸回転
+                if (this.rolling) this.rotationY += 90; // Y軸回転
             });
         var haku = tm.hybrid.createMeshFromMMD("haku", "wave2")
             .addChildTo(this)
-            .setPosition(0, 0, 10)
+            .setPosition(20, 0, 0)
             .setRotation(0, 0, 0)
             .on("enterframe", function() {
-                if (this.rolling) this.rotationY += 0; // Y軸回転
-            });
-
-        var dummy = tm.hybrid.createMeshFromMMD("dummy", "wave")
-            .addChildTo(this)
-            .setPosition(15, 0, -30)
-            .setRotation(0, 0, 0)
-            .on("enterframe", function() {
-                if (this.rolling) this.rotationY += 0; // Y軸回転
+                if (this.rolling) this.rotationY += 90; // Y軸回転
             });
 
         // 2Dスプライトとの併用も可能
