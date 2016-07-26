@@ -10,20 +10,20 @@ tm.main(function() {
         width: windowWidth, height: windowHeight,
         assets: {
             hiyoko: "assets/hiyoco_nomal_full.png",
-            bgm: "assets/jljt.mp3",
+            bgm: "http://o7ze2s1ph.bkt.clouddn.com/medias%2Fmusic%2Flab%2Fmmd%2Fjljt.mp3",
 
             //urlをモデルデータ、モーションデータの順に指定
             //There is a need to specify the PMD and VMD together to play the MMD
             miku: {
                 type: "mmd",
                 //url: ["assets/pmd/miku_v2.pmd", "assets/pmd/jl2.vmd"],
-                url: ["assets/pmd/miku.pmd", "assets/pmd/jl2.vmd"],
+                url: ["http://o7ze2s1ph.bkt.clouddn.com/mmd/miku.pmd", "http://o7ze2s1ph.bkt.clouddn.com/mmd/jl2.vmd"],
             },
             //分けて読み込みも可能
-            haku:   "assets/pmd/haku.pmd",
-            neru:   "assets/pmd/neru.pmd",
-            wave:   "assets/pmd/jl2.vmd",
-            wave2:   "assets/pmd/jl1.vmd",
+            haku:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/haku.pmd",
+            neru:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/neru.pmd",
+            wave:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/jl2.vmd",
+            wave2:   "http://o7ze2s1ph.bkt.clouddn.com/mmd/jl1.vmd",
         },
         nextScene: MikuOnStage,
     }));
