@@ -1,11 +1,13 @@
+var windowWidth = 1920;
+var windowHeight = 1080;
 tm.main(function() {
     var app = tm.hybrid.Application("#canvas2d", "#canvas3d");
     app.fps = 60;
-    app.resize(640, 960).fitWindow().run();
+    app.resize(windowWidth, windowHeight).fitWindow().run();
     app.enableStats();
     
     app.replaceScene(tm.game.LoadingScene({
-        width: 640, height: 960,
+        width: windowWidth, height: windowHeight,
         assets: {
             hiyoko: "assets/hiyoco_nomal_full.png",
             bgm: "assets/jljt.mp3",
@@ -14,11 +16,17 @@ tm.main(function() {
             //There is a need to specify the PMD and VMD together to play the MMD
             miku: {
                 type: "mmd",
-                url: ["assets/pmd/miku_v2.pmd", "assets/pmd/jl2.vmd"],
+                //url: ["assets/pmd/miku_v2.pmd", "assets/pmd/jl2.vmd"],
+                url: ["assets/pmd/miku.pmd", "assets/pmd/jl2.vmd"],
             },
             //分けて読み込みも可能
-            neru:   "assets/pmd/miku.pmd",
-            wave:   "assets/pmd/jl1.vmd",
+            dummy:   "assets/pmd/dummy.pmd",
+            haku:   "assets/pmd/haku.pmd",
+            kaito:   "assets/pmd/kaito.pmd",
+            meiko_sakine:   "assets/pmd/meiko_sakine.pmd",
+            neru:   "assets/pmd/neru.pmd",
+            wave:   "assets/pmd/jl2.vmd",
+            wave2:   "assets/pmd/jl1.vmd",
         },
         nextScene: MikuOnStage,
     }));
@@ -30,8 +38,8 @@ tm.define("MikuOnStage", {
         this.superInit();
 
         // カメラ調整
-        this.camera.setPosition(0, 20, 30);
-        this.camera.lookAt(new THREE.Vector3(0, 10, 0));
+        this.camera.setPosition(40, 20, 0);
+        this.camera.lookAt(new THREE.Vector3(0, 15, 0));
         
         // ライトを動かす
         this.directionalLight.setPosition(0, 100, -80);
@@ -41,16 +49,31 @@ tm.define("MikuOnStage", {
             .addChildTo(this)
             .setPosition(0, 0, 0)
             .on("enterframe", function() {
-                if (this.rolling) this.rotationY += 10; // Y軸回転
+                if (this.rolling) this.rotationY += 0; // Y軸回転
             });
 
         //分割読み込みからメッシュを生成
         var neru = tm.hybrid.createMeshFromMMD("neru", "wave")
             .addChildTo(this)
-            .setPosition(0, 0, -30)
-            .setRotation(0, 180, 0)
+            .setPosition(0, 0, -10)
+            .setRotation(0, 0, 0)
             .on("enterframe", function() {
-                if (this.rolling) this.rotationY += 10; // Y軸回転
+                if (this.rolling) this.rotationY += 0; // Y軸回転
+            });
+        var haku = tm.hybrid.createMeshFromMMD("haku", "wave2")
+            .addChildTo(this)
+            .setPosition(0, 0, 10)
+            .setRotation(0, 0, 0)
+            .on("enterframe", function() {
+                if (this.rolling) this.rotationY += 0; // Y軸回転
+            });
+
+        var dummy = tm.hybrid.createMeshFromMMD("dummy", "wave")
+            .addChildTo(this)
+            .setPosition(15, 0, -30)
+            .setRotation(0, 0, 0)
+            .on("enterframe", function() {
+                if (this.rolling) this.rotationY += 0; // Y軸回転
             });
 
         // 2Dスプライトとの併用も可能
@@ -61,8 +84,8 @@ tm.define("MikuOnStage", {
             .on("enterframe", function() {
                 this.x += this.vx * 10;
                 this.y += this.vy * 10;
-                if (this.x < 0 || 640 < this.x) this.vx *= -1;
-                if (this.y < 0 || 960 < this.y) this.vy *= -1;
+                if (this.x < 0 || windowWidth < this.x) this.vx *= -1;
+                if (this.y < 0 || windowHeight < this.y) this.vy *= -1;
                 
                 this.frameIndex = (this.frameIndex + 1) % 4;
                 this.rotation += 2;
@@ -71,7 +94,7 @@ tm.define("MikuOnStage", {
         hiyoko.vy = 1;
 
         var btn = tm.ui.FlatButton({ text: "スタート" })
-            .setPosition(320, 960*0.5)
+            .setPosition(320, windowHeight * 0.5)
             .addChildTo(this)
             .on("push", function() {
                 btn.visible = false;
