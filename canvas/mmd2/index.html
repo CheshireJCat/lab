@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>three.js webgl - loaders - MMD loader</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style type="text/css">
+    body {
+        margin: 0;
+    }
+    </style>
+</head>
+
+<body data-pinterest-extension-installed="cr1.39.2">
+    <script src="./js/three.js"></script>
+    <script src="./js/charsetencoder.min.js"></script>
+    <script src="./js/ammo.js"></script>
+    <script src="./js/TGALoader.js"></script>
+    <script src="./js/MMDLoader.js"></script>
+    <script src="./js/CCDIKSolver.js"></script>
+    <script src="./js/MMDPhysics.js"></script>
+    <script src="./js/Detector.js"></script>
+    <script src="./js/stats.min.js"></script>
+    <script>
+    var mmd = (function() {
+        var container, stats;
+
+        var mesh, camera, scene, renderer;
+        var helper;
+
+        var ready = false;
+
+        var mouseX = 0,
+            mouseY = 0;
+
+        var windowHalfX = window.innerWidth / 2;
+        var windowHalfY = window.innerHeight / 2;
+
+        var clock = new THREE.Clock();
+
+        var animate = function() {
+            requestAnimationFrame(animate);
+            render();
+        };
+
+        init();
+        animate();
+
+        var modelFile = 'models/mmd/miku9/1.pmx';
+        var vmdFiles = ['models/mmd/vmd/elysion2.vmd'];
+        var cameraFiles = ['models/mmd/vmd/camera2.vmd'];
+        var audioFile = 'models/mmd/audio/elysion.mp3';
+
+        function init() {
+
+            //create div
+            container = document.createElement('div');
+            document.body.appendChild(container);
+
+            //create camera
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+
+            //create scene
+            scene = new THREE.Scene();
+
+            //create ambient light - 环境光
+            var ambient = new THREE.AmbientLight(0xffebee);
+            scene.add(ambient);
+
+            //create directionalLight -平行光
+            var directionalLight = new THREE.DirectionalLight(0x84ffff);
+            directionalLight.position.set(-1, 1, 1).normalize();
+            scene.add(directionalLight);
+
+            //create plane - 创建场地
+            var geometry = new THREE.PlaneBufferGeometry(200, 200, 40, 40);
+            var material = new THREE.MeshLambertMaterial({
+                color: 0xa0becd,
+                wireframe: true
+            });
+            var plane = new THREE.Mesh(geometry, material);
+            plane.position.y = 0;
+            plane.rotation.x = -Math.PI / 2;
+            plane.receiveShadow = true;
+
+            //渲染
+            renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(new THREE.Color(0x000000));
+            container.appendChild(renderer.domElement);
+
+            //模型载入进度
+            function progressF(id) {
+                return function(xhr) {
+                    if (xhr.lengthComputable) {
+                        var percentComplete = xhr.loaded / xhr.total * 100;
+                        document.getElementById(id).innerHTML = Math.round(percentComplete, 2) + '% downloaded';
+                    }
+                };
+            }
+
+            var onError = function(xhr) {};
+
+            var modelFile = 'models/mmd/miku9/1.pmx';
+            //var vmdFiles = ['models/mmd/vmd/elysion2.vmd'];
+            var vmdFiles = ['http://o7ze2s1ph.bkt.clouddn.com/mmd/jl2.vmd'];
+            var cameraFiles = ['models/mmd/vmd/camera2.vmd'];
+            //var audioFile = 'models/mmd/audio/elysion.mp3';
+            var audioFile = 'http://o7ze2s1ph.bkt.clouddn.com/medias%2Fmusic%2Flab%2Fmmd%2Fjljt.mp3';
+            var audioParams = {
+                //delayTime: 160 * 1 / 30
+                delayTime: 0,
+                loop:false
+            };
+
+            //mmd 助手
+            helper = new THREE.MMDHelper(renderer);
+
+            var loader = new THREE.MMDLoader();
+            loader.setDefaultTexturePath('./models/mmd/default/');
+
+            loader.load(modelFile, vmdFiles, function(object) {
+                mesh = object;
+                helper.add(mesh);
+                helper.setAnimation(mesh);
+                if (!isMobileDevice()) {
+                    helper.setPhysics(mesh);
+                }
+
+                loader.loadVmds(cameraFiles, function(vmd) {
+
+                    helper.setCamera(camera);
+                    loader.pourVmdIntoCamera(camera, vmd);
+                    helper.setCameraAnimation(camera);
+
+                    loader.loadAudio(audioFile, function(audio, listener) {
+
+                        listener.position.z = 1;
+                        helper.setAudio(audio, listener, audioParams);
+                        helper.unifyAnimationDuration();
+                        helper.audioManager.audio.setLoop(0);
+
+                        scene.add(audio);
+                        scene.add(listener);
+                        scene.add(mesh);
+                        scene.add(plane);
+
+                        ready = true;
+                        document.getElementById('audio').innerHTML = '';
+                        document.getElementById('camera').innerHTML = '';
+                        document.getElementById('model').innerHTML = '';
+
+                    }, progressF('audio'), onError);
+                }, progressF('camera'), onError);
+            }, progressF('model'), onError);
+
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+
+        }
+
+        function onWindowResize() {
+
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+        }
+
+        function onDocumentMouseMove(event) {
+
+            mouseX = (event.clientX - windowHalfX) / 2;
+            mouseY = (event.clientY - windowHalfY) / 2;
+
+        }
+
+        function render() {
+
+            if (ready) {
+                var delta = clock.getDelta();
+                helper.animate(delta);
+                helper.render(scene, camera);
+            } else {
+                renderer.clear();
+                renderer.render(scene, camera);
+            }
+        }
+
+        // easy mobile device detection
+        function isMobileDevice() {
+
+            if (navigator === undefined || navigator.userAgent === undefined) {
+                return true;
+            }
+
+            var s = navigator.userAgent;
+            if (s.match(/iPhone/i) || s.match(/iPod/i) || s.match(/webOS/i) || s.match(/BlackBerry/i) || (s.match(/Windows/i) && s.match(/Phone/i)) || (s.match(/Android/i) && s.match(/Mobile/i))) {
+                return true;
+            }
+            return false;
+        }
+        return {
+            pause:function(){
+                cancelAnimationFrame(animate);
+                animate = undefined;
+                helper.audioManager.audio.pause();
+            },
+            play:function(){
+                helper.audioManager.audio.play();
+                animate = function() {
+                    requestAnimationFrame(animate);
+                    render();
+                };
+                requestAnimationFrame(animate);
+            },
+            stop:function(){
+                cancelAnimationFrame(animate);
+                animate = undefined;
+                helper.audioManager.audio.stop();
+            },
+            start:function(){
+                cancelAnimationFrame(animate);
+                animate = function() {
+                    requestAnimationFrame(animate);
+                    render();
+                };
+                helper.audioManager.audio.start();
+            }
+        }
+    })();
+    </script>
+    <style type="text/css">
+    #info {
+        position: fixed;
+        top: 0;
+        left: 0;
+        color: #999;
+    }
+    #info a {
+        color: #999;
+    }
+    </style>
+    <div id="info" style="position:fixed;top:0;left:0;">
+        <a href="http://threejs.org/" target="_blank">three.js</a> - MMDLoader test
+        <br> Copyright
+        <br>
+        <a href="http://www.moeol.com/forum.php?mod=viewthread&tid=19485&extra=&highlight=&page=1" target="_blank">Model Data</a> & <a href="http://www.nicovideo.jp/watch/sm13147122" target="_blank">Dance Data</a> <span id="model">loading...</span>
+        <br>
+        <a href="http://www.nicovideo.jp/watch/sm29236354" target="_blank">Camera Data</a> <span id="camera">loading</span>
+        <br>
+        <a href="http://www.nicovideo.jp/watch/sm29167672" target="_blank">Audio Data</a> <span id="audio">loading</span>
+        <br>
+        <a href="/" target="_blank">Audio Data</a> <span id="audio">Go Index</span>
+    </div>
+    <ul class="progress">
+    </ul>
+</body>
+
+</html>
