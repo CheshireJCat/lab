@@ -13,7 +13,7 @@
 </head>
 
 <body data-pinterest-extension-installed="cr1.39.2">
-    <script src="./js/three.js"></script>
+    <!-- <script src="./js/three.js"></script>
     <script src="./js/charsetencoder.min.js"></script>
     <script src="./js/ammo.js"></script>
     <script src="./js/TGALoader.js"></script>
@@ -22,110 +22,184 @@
     <script src="./js/MMDPhysics.js"></script>
     <script src="./js/Detector.js"></script>
     <script src="./js/stats.min.js"></script>
+    <script src="./js/dat.gui.min.js"></script> -->
+    <script src="//cdn.bootcss.com/three.js/r79/three.min.js"></script>
+    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/charsetencoder.min.js"></script>
+    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/ammo.js"></script>
+    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/TGALoader.js"></script>
+    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/MMDLoader.js"></script>
+    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/CCDIKSolver.js"></script>
+    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/MMDPhysics.js"></script>
+    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/Detector.js"></script>
+    <script src="//cdn.bootcss.com/stats.js/r16/Stats.min.js"></script>
+    <script src="//cdn.bootcss.com/dat-gui/0.5.1/dat.gui.min.js"></script>
     <script>
     var mmd = (function() {
-        var container, stats;
+    var container, stats;
 
-        var mesh, camera, scene, renderer;
-        var helper;
+    var mesh, camera, scene, renderer;
+    var helper;
 
-        var ready = false;
+    var ready = false;
 
-        var mouseX = 0,
-            mouseY = 0;
+    var mouseX = 0,
+        mouseY = 0;
 
-        var windowHalfX = window.innerWidth / 2;
-        var windowHalfY = window.innerHeight / 2;
+    var windowHalfX = window.innerWidth / 2;
+    var windowHalfY = window.innerHeight / 2;
 
-        var clock = new THREE.Clock();
+    var clock = new THREE.Clock();
 
-        var animate = function() {
-            requestAnimationFrame(animate);
-            render();
+    var animate = function() {
+        requestAnimationFrame(animate);
+        render();
+    };
+    //stat fps listen
+    stats = new Stats();
+    stats.setMode(0);
+    stats.domElement.style.position = 'fixed';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.bottom = '0px';
+    stats.domElement.style.top = 'auto';
+    document.body.appendChild(stats.domElement);
+
+    var fontLink = 'http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/';
+    var op = {
+        ambientColor: '#454545',
+        directionalLightColor: '#CCCCCC',
+        modelFile: {
+            tda: fontLink+'models/role/mikuTheWorldIsMime/1.pmd',
+            sms: fontLink+'models/role/miku9/1.pmx'
+        },
+        vmdFiles: {
+            elysion: [fontLink+'models/vmd/elysion2.vmd'],
+            snow: [fontLink+'models/vmd/snow.vmd']
+        },
+        cameraFiles: {
+            elysion: [fontLink+'models/vmd/camera1.vmd']
+        },
+        audioFile: {
+            elysion: fontLink+'models/audio/elysion.mp3',
+            LoveSnowRealMagic: fontLink+'models/audio/LoveSnowRealMagic.mp3'
+        },
+        container: 'mmd-container'
+    };
+
+    init();
+    animate();
+
+    var ambient;
+    var plane;
+    var directionalLight;
+
+    function createStage() {
+        if (document.getElementById(op.container)) {
+            return false;
+        }
+        //create div
+        container = document.createElement('div');
+        container.id = op.container;
+        if (!document.getElementById(container.id)) document.body.appendChild(container);
+
+        //create camera
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+
+        //create scene
+        scene = new THREE.Scene();
+        //create ambient light - 环境光
+        ambient = new THREE.AmbientLight(op.ambientColor);
+        scene.add(ambient);
+
+        //create directionalLight -平行光
+        directionalLight = new THREE.DirectionalLight(op.directionalLightColor);
+        directionalLight.position.set(-1, 1, 1).normalize();
+        scene.add(directionalLight);
+
+        //create plane - 创建场地
+        var geometry = new THREE.PlaneBufferGeometry(200, 200, 40, 40);
+        var material = new THREE.MeshLambertMaterial({
+            color: 0xa0becd,
+            wireframe: true
+        });
+        plane = new THREE.Mesh(geometry, material);
+        plane.position.y = 0;
+        plane.rotation.x = -Math.PI / 2;
+        plane.receiveShadow = true;
+        scene.add(plane);
+
+        //渲染
+        renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(new THREE.Color(0x000000));
+        if (!container.getElementsByTagName('canvas')[0]) container.appendChild(renderer.domElement);
+    }
+
+    function changeLight(_op) {
+        directionalLight.color.set(_op && _op.directionalLightColor || op.directionalLightColor);
+        ambient.color.set(_op && _op.ambientColor || op.ambientColor);
+    }
+
+    function init(_op) {
+        createStage();
+        changeLight(_op);
+
+        //模型载入进度
+        function progressF(id) {
+            return function(xhr) {
+                if (xhr.lengthComputable) {
+                    var percentComplete = xhr.loaded / xhr.total * 100;
+                    document.getElementById(id).innerHTML = Math.round(percentComplete, 2) + '% downloaded';
+                }
+            };
+        }
+
+        function onError(id, path) {
+            return function(xhr) {
+                console.log(id, path);
+            };
+        }
+
+        var modelFile = _op && _op.modelFile || op.modelFile.tda;
+        var vmdFiles = _op && _op.vmdFiles || op.vmdFiles.elysion;
+        vmdFiles = vmdFiles.slice();
+        if (typeof vmdFiles == 'string') {
+            vmdFiles = [vmdFiles]
+        }
+        var audioFile = _op && _op.audioFile || op.audioFile.elysion;
+        var cameraFiles = _op && _op.cameraFiles || op.cameraFiles.elysion;
+        cameraFiles = cameraFiles.slice();
+        if (typeof cameraFiles == 'string') {
+            cameraFiles = [cameraFiles]
+        }
+        var audioParams = {
+            delayTime: 0,
+            autoplay: false
         };
 
-        init();
-        animate();
+        //mmd 助手
+        helper = new THREE.MMDHelper(renderer);
 
-        var modelFile = 'models/mmd/miku9/1.pmx';
-        var vmdFiles = ['models/mmd/vmd/elysion2.vmd'];
-        var cameraFiles = ['models/mmd/vmd/camera2.vmd'];
-        var audioFile = 'models/mmd/audio/elysion.mp3';
+        var loader = new THREE.MMDLoader();
+        //loader.setDefaultTexturePath(fontLink+'models/default/');
 
-        function init() {
+        loader.loadAudio(audioFile, function(audio, listener) {
 
-            //create div
-            container = document.createElement('div');
-            document.body.appendChild(container);
+            listener.position.z = 1;
+            helper.setAudio(audio, listener, audioParams);
+            helper.unifyAnimationDuration();
 
-            //create camera
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+            audio.name = 'audio';
+            listener.name = 'listener';
 
-            //create scene
-            scene = new THREE.Scene();
-
-            //create ambient light - 环境光
-            var ambient = new THREE.AmbientLight(0xffebee);
-            scene.add(ambient);
-
-            //create directionalLight -平行光
-            var directionalLight = new THREE.DirectionalLight(0x84ffff);
-            directionalLight.position.set(-1, 1, 1).normalize();
-            scene.add(directionalLight);
-
-            //create plane - 创建场地
-            var geometry = new THREE.PlaneBufferGeometry(200, 200, 40, 40);
-            var material = new THREE.MeshLambertMaterial({
-                color: 0xa0becd,
-                wireframe: true
-            });
-            var plane = new THREE.Mesh(geometry, material);
-            plane.position.y = 0;
-            plane.rotation.x = -Math.PI / 2;
-            plane.receiveShadow = true;
-
-            //渲染
-            renderer = new THREE.WebGLRenderer();
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(new THREE.Color(0x000000));
-            container.appendChild(renderer.domElement);
-
-            //模型载入进度
-            function progressF(id) {
-                return function(xhr) {
-                    if (xhr.lengthComputable) {
-                        var percentComplete = xhr.loaded / xhr.total * 100;
-                        document.getElementById(id).innerHTML = Math.round(percentComplete, 2) + '% downloaded';
-                    }
-                };
-            }
-
-            var onError = function(xhr) {};
-
-            //var modelFile = 'models/mmd/miku9/1.pmx';
-            //var vmdFiles = ['models/mmd/vmd/elysion2.vmd'];
-            //var cameraFiles = ['models/mmd/vmd/camera2.vmd'];
-            //var audioFile = 'models/mmd/audio/elysion.mp3';
-            var modelFile = 'http://o7ze2s1ph.bkt.clouddn.com/lab/canvas/mmd2/miku/1.pmx';
-            var cameraFiles = ['http://o7ze2s1ph.bkt.clouddn.com/lab/canvas/mmd2/vmd/camera2.vmd'];
-            var vmdFiles = ['http://o7ze2s1ph.bkt.clouddn.com/mmd/jl2.vmd'];
-            var audioFile = 'http://o7ze2s1ph.bkt.clouddn.com/medias%2Fmusic%2Flab%2Fmmd%2Fjljt.mp3';
-            var audioParams = {
-                //delayTime: 160 * 1 / 30
-                delayTime: 0,
-                loop:false
-            };
-
-            //mmd 助手
-            helper = new THREE.MMDHelper(renderer);
-
-            var loader = new THREE.MMDLoader();
-            loader.setDefaultTexturePath('./models/mmd/default/');
+            scene.add(audio);
+            scene.add(listener);
 
             loader.load(modelFile, vmdFiles, function(object) {
                 mesh = object;
+                mesh.name = 'mesh';
                 helper.add(mesh);
+                scene.add(mesh);
                 helper.setAnimation(mesh);
                 if (!isMobileDevice()) {
                     helper.setPhysics(mesh);
@@ -136,106 +210,151 @@
                     helper.setCamera(camera);
                     loader.pourVmdIntoCamera(camera, vmd);
                     helper.setCameraAnimation(camera);
+                    canPlay(_op);
 
-                    loader.loadAudio(audioFile, function(audio, listener) {
+                }, progressF('camera'), onError('camera', cameraFiles));
+            }, progressF('model'), onError('model', [modelFile, vmdFiles]));
+        }, progressF('audio'), onError('audio', audioFile));
 
-                        listener.position.z = 1;
-                        helper.setAudio(audio, listener, audioParams);
-                        helper.unifyAnimationDuration();
-                        helper.audioManager.audio.setLoop(0);
+        document.addEventListener('mousemove', onDocumentMouseMove, false);
+        window.addEventListener('resize', onWindowResize, false);
+    }
 
-                        scene.add(audio);
-                        scene.add(listener);
-                        scene.add(mesh);
-                        scene.add(plane);
+    function canPlay(_op) {
+        ready = true;
+        document.getElementById('audio').innerHTML = '';
+        document.getElementById('camera').innerHTML = '';
+        document.getElementById('model').innerHTML = '';
 
-                        ready = true;
-                        document.getElementById('audio').innerHTML = '';
-                        document.getElementById('camera').innerHTML = '';
-                        document.getElementById('model').innerHTML = '';
+        if (_op && _op.callback && typeof _op.callback == 'function') {
+            _op.callback();
+        }
+    }
 
-                    }, progressF('audio'), onError);
-                }, progressF('camera'), onError);
-            }, progressF('model'), onError);
+    function remove(name) {
+        scene.remove(scene.getObjectByName(name))
+    }
 
-            document.addEventListener('mousemove', onDocumentMouseMove, false);
-            window.addEventListener('resize', onWindowResize, false);
+    function onWindowResize() {
 
+        windowHalfX = window.innerWidth / 2;
+        windowHalfY = window.innerHeight / 2;
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+    }
+
+    function onDocumentMouseMove(event) {
+
+        mouseX = (event.clientX - windowHalfX) / 2;
+        mouseY = (event.clientY - windowHalfY) / 2;
+
+    }
+
+    function render() {
+
+        if (ready) {
+            var delta = clock.getDelta();
+            helper.animate(delta);
+            helper.render(scene, camera);
+            stats.update();
+        } else {
+            window.cancelAnimationFrame(animate);
+            renderer.clear();
+            renderer.render(scene, camera);
+        }
+    }
+
+    // easy mobile device detection
+    function isMobileDevice() {
+
+        if (navigator === undefined || navigator.userAgent === undefined) {
+            return true;
         }
 
-        function onWindowResize() {
-
-            windowHalfX = window.innerWidth / 2;
-            windowHalfY = window.innerHeight / 2;
-
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
+        var s = navigator.userAgent;
+        if (s.match(/iPhone/i) || s.match(/iPod/i) || s.match(/webOS/i) || s.match(/BlackBerry/i) || (s.match(/Windows/i) && s.match(/Phone/i)) || (s.match(/Android/i) && s.match(/Mobile/i))) {
+            return true;
         }
+        return false;
+    }
 
-        function onDocumentMouseMove(event) {
-
-            mouseX = (event.clientX - windowHalfX) / 2;
-            mouseY = (event.clientY - windowHalfY) / 2;
-
+    var sf = {
+        pause: function() {
+            ready = false;
+            helper.audioManager.audio.pause();
+        },
+        play: function() {
+            ready = true;
+            animate();
+            helper.audioManager.audio.play();
         }
+    };
 
-        function render() {
+    // DAT-GUI
+    var controls = new function() {
+        this.playing = ready || true;
+        this.ambientColor = op.ambientColor;
+        this.directionalLightColor = op.directionalLightColor;
+    };
+    var gui = new dat.GUI();
+    var controlsCamera = gui.addFolder('Camera');
+    controlsCamera.add(camera.position, 'x', -100, 100).listen();
+    controlsCamera.add(camera.position, 'y', -100, 100).listen();
+    controlsCamera.add(camera.position, 'z', -100, 100).listen();
+    controlsCamera.add(camera, 'fov').listen();
 
-            if (ready) {
-                var delta = clock.getDelta();
-                helper.animate(delta);
-                helper.render(scene, camera);
-            } else {
-                renderer.clear();
-                renderer.render(scene, camera);
-            }
-        }
+    controlsCamera.open();
 
-        // easy mobile device detection
-        function isMobileDevice() {
+    gui.add(controls, 'playing').onChange(function(v) {
+        v ? sf.play() : sf.pause();
+    });
+    gui.addColor(controls, 'ambientColor').onChange(function(c) {
+        ambient.color.set(c);
+    });
+    gui.addColor(controls, 'directionalLightColor').onChange(function(c) {
+        directionalLight.color.set(c);
+    });
 
-            if (navigator === undefined || navigator.userAgent === undefined) {
-                return true;
-            }
+    var mmdData = new function() {
+        this.ambientColor = op.ambientColor;
+        this.directionalLightColor = op.directionalLightColor;
+        this.modelFile = op.modelFile;
+        this.vmdFiles = op.vmdFiles;
+        this.audioFile = op.audioFile;
+        this.cameraFiles = op.cameraFiles;
+        this.callback = sf.play;
+    };
 
-            var s = navigator.userAgent;
-            if (s.match(/iPhone/i) || s.match(/iPod/i) || s.match(/webOS/i) || s.match(/BlackBerry/i) || (s.match(/Windows/i) && s.match(/Phone/i)) || (s.match(/Android/i) && s.match(/Mobile/i))) {
-                return true;
-            }
-            return false;
-        }
-        return {
-            pause:function(){
-                cancelAnimationFrame(animate);
-                animate = undefined;
-                helper.audioManager.audio.pause();
-            },
-            play:function(){
-                helper.audioManager.audio.play();
-                animate = function() {
-                    requestAnimationFrame(animate);
-                    render();
-                };
-                requestAnimationFrame(animate);
-            },
-            stop:function(){
-                cancelAnimationFrame(animate);
-                animate = undefined;
-                helper.audioManager.audio.stop();
-            },
-            start:function(){
-                cancelAnimationFrame(animate);
-                animate = function() {
-                    requestAnimationFrame(animate);
-                    render();
-                };
-                helper.audioManager.audio.start();
-            }
-        }
-    })();
+    var gui2 = new dat.GUI();
+    gui2.addColor(mmdData, 'ambientColor', mmdData.ambientColor);
+    gui2.addColor(mmdData, 'directionalLightColor', mmdData.directionalLightColor);
+    gui2.add(mmdData, 'modelFile', mmdData.modelFile);
+    gui2.add(mmdData, 'vmdFiles', mmdData.vmdFiles);
+    gui2.add(mmdData, 'audioFile', mmdData.audioFile, mmdData.audioFile.goodbyeTears);
+    gui2.add(mmdData, 'cameraFiles', mmdData.cameraFiles);
+
+    var mmdPlayBtn = document.createElement('li');
+    mmdPlayBtn.innerHTML = 'Player MMD';
+    mmdPlayBtn.style.textAlign = 'center';
+    mmdPlayBtn.style.cursor = 'pointer';
+    mmdPlayBtn.onclick = function() {
+        sf.pause();
+        helper.audioManager.audio.stop();
+        helper.audioManager.audio.source.stop();
+        mmdData.ambientColor = /miku9/gi.test(mmdData.modelFile) ? '#ffffff' : '#454545';
+        remove('audio');
+        remove('mesh');
+        remove('listener');
+        init(mmdData);
+    };
+    gui2.domElement.childNodes[1].appendChild(mmdPlayBtn);
+
+
+    return scene;})();
     </script>
     <style type="text/css">
     #info {
@@ -244,6 +363,7 @@
         left: 0;
         color: #999;
     }
+    
     #info a {
         color: #999;
     }
@@ -258,7 +378,7 @@
         <br>
         <a href="http://www.nicovideo.jp/watch/sm29167672" target="_blank">Audio Data</a> <span id="audio">loading</span>
         <br>
-        <a href="/" target="_blank">Audio Data</a> <span id="audio">Go Index</span>
+        <a href="/" target="_blank">Go Index</a>
     </div>
 </body>
 
