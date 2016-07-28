@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>距离传感器</title>
+</head>
+<body>
+<dl>
+	<dt>距离信息</dt>
+	<dd id="proximityValue"></dd>
+	<dd id="proximityMax"></dd>
+	<dd id="proximityMin"></dd>
+	<dt>物体靠近</dt>
+	<dd id="inProximity"></dd>
+</dl>
+	<script type="text/javascript">
+		if (window.ondeviceproximity) {
+		    window.addEventListener('deviceproximity', function(event) {
+		    document.getElementById('proximityValue').innerHTML = event.value;
+		    document.getElementById('proximityMax').innerHTML = event.max;
+		    document.getElementById('proximityMin').innerHTML = event.min;
+	    });
+		}else{
+			alert("不支持返回距离信息");
+		}
+
+		if (window.onuserproximity) {
+		    // 支持返回是否有物体靠近
+		    window.addEventListener('userproximity', function(event) {
+		    	document.getElementById('inProximity').innerHTML = event.near;
+		    });
+		}else{
+			alert("不支持返回是否有物体靠近");
+		}
+	</script>
+</body>
+</html>

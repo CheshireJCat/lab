@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>musicDancer</title>
+</head>
+<body>
+	<!-- <audio id="audio" src="QYN.mp3" autoplay controls></audio> -->
+	        <input type="file" id="uploadedFile">
+	        <input type="text" id="webMusic">
+	        <input type="button" onclick="loadSound('QYN.mp3')" value="读取示例音乐">
+	        <style type="text/css">
+	        	body{background-color: #000;color:#fff;}
+		        #box div{width:0;height:5px;background:#fff;border-radius:0 30% 30% 0;transition: all 0.1s;}
+		        #box{transform:rotate(-90deg) translateX(-700px) translateY(100px);transform-origin: 0 0;width: 200px;}
+	        </style>
+	    <div id="box">
+	        <div id="div1"></div>
+	        <div id="div2"></div>
+	        <div id="div3"></div>
+	        <div id="div4"></div>
+	        <div id="div5"></div>
+	        <div id="div6"></div>
+	        <div id="div7"></div>
+	        <div id="div8"></div>
+	        <div id="div9"></div>
+	        <div id="div10"></div>
+	        <div id="div11"></div>
+	        <div id="div12"></div>
+	        <div id="div13"></div>
+	        <div id="div14"></div>
+	        <div id="div15"></div>
+	        <div id="div16"></div>
+	        <div id="div17"></div>
+	        <div id="div18"></div>
+	        <div id="div19"></div>
+	        <div id="div20"></div>
+	        <div id="div21"></div>
+	        <div id="div22"></div>
+	        <div id="div23"></div>
+	        <div id="div24"></div>
+	        <div id="div25"></div>
+	        <div id="div26"></div>
+	        <div id="div27"></div>
+	        <div id="div28"></div>
+	        <div id="div29"></div>
+	        <div id="div30"></div>
+	        <div id="div31"></div>
+	        <div id="div32"></div>
+	        <div id="div33"></div>
+	        <div id="div34"></div>
+	        <div id="div35"></div>
+	        <div id="div36"></div>
+	        <div id="div37"></div>
+	        <div id="div38"></div>
+	        <div id="div39"></div>
+	        <div id="div40"></div>
+	        <div id="div41"></div>
+	        <div id="div42"></div>
+	        <div id="div43"></div>
+	        <div id="div44"></div>
+	        <div id="div45"></div>
+	        <div id="div46"></div>
+	        <div id="div47"></div>
+	        <div id="div48"></div>
+	        <div id="div49"></div>
+	        <div id="div50"></div>
+	        <div id="div51"></div>
+	        <div id="div52"></div>
+	        <div id="div53"></div>
+	        <div id="div54"></div>
+	        <div id="div55"></div>
+	        <div id="div56"></div>
+	        <div id="div57"></div>
+	        <div id="div58"></div>
+	        <div id="div59"></div>
+	        <div id="div60"></div>
+	        <div id="div61"></div>
+	        <div id="div62"></div>
+	        <div id="div63"></div>
+	        <div id="div64"></div>
+	        <div id="div65"></div>
+	        <div id="div66"></div>
+	        <div id="div67"></div>
+	        <div id="div68"></div>
+	        <div id="div69"></div>
+	        <div id="div70"></div>
+	        <div id="div71"></div>
+	        <div id="div72"></div>
+	        <div id="div73"></div>
+	        <div id="div74"></div>
+	        <div id="div75"></div>
+	        <div id="div76"></div>
+	        <div id="div77"></div>
+	        <div id="div78"></div>
+	        <div id="div79"></div>
+	        <div id="div80"></div>
+	        <div id="div81"></div>
+	        <div id="div82"></div>
+	        <div id="div83"></div>
+	        <div id="div84"></div>
+	        <div id="div85"></div>
+	        <div id="div86"></div>
+	        <div id="div87"></div>
+	        <div id="div88"></div>
+	        <div id="div89"></div>
+	        <div id="div90"></div>
+	        <div id="div91"></div>
+	        <div id="div92"></div>
+	        <div id="div93"></div>
+	        <div id="div94"></div>
+	        <div id="div95"></div>
+	        <div id="div96"></div>
+	        <div id="div97"></div>
+	        <div id="div98"></div>
+	        <div id="div99"></div>
+	        <div id="div100"></div>
+	        <div id="div101"></div>
+	        <div id="div102"></div>
+	        <div id="div103"></div>
+	        <div id="div104"></div>
+	        <div id="div105"></div>
+	        <div id="div106"></div>
+	        <div id="div107"></div>
+	        <div id="div108"></div>
+	        <div id="div109"></div>
+	        <div id="div110"></div>
+	        <div id="div111"></div>
+	        <div id="div112"></div>
+	        <div id="div113"></div>
+	        <div id="div114"></div>
+	        <div id="div115"></div>
+	        <div id="div116"></div>
+	        <div id="div117"></div>
+	        <div id="div118"></div>
+	        <div id="div119"></div>
+	        <div id="div120"></div>
+	        <div id="div121"></div>
+	        <div id="div122"></div>
+	        <div id="div123"></div>
+	        <div id="div124"></div>
+	        <div id="div125"></div>
+	        <div id="div126"></div>
+	        <div id="div127"></div>
+	        <div id="div128"></div>
+	        <div id="div129"></div>
+	        <div id="div130"></div>
+	        <div id="div131"></div>
+	        <div id="div132"></div>
+	        <div id="div133"></div>
+	        <div id="div134"></div>
+	        <div id="div135"></div>
+	        <div id="div136"></div>
+	        <div id="div137"></div>
+	        <div id="div138"></div>
+	        <div id="div139"></div>
+	        <div id="div140"></div>
+	        <div id="div141"></div>
+	        <div id="div142"></div>
+	        <div id="div143"></div>
+	        <div id="div144"></div>
+	        <div id="div145"></div>
+	        <div id="div146"></div>
+	        <div id="div147"></div>
+	        <div id="div148"></div>
+	        <div id="div149"></div>
+	        <div id="div150"></div>
+	        <div id="div151"></div>
+	        <div id="div152"></div>
+	        <div id="div153"></div>
+	        <div id="div154"></div>
+	        <div id="div155"></div>
+	        <div id="div156"></div>
+	        <div id="div157"></div>
+	        <div id="div158"></div>
+	        <div id="div159"></div>
+	        <div id="div160"></div>
+	        <div id="div161"></div>
+	        <div id="div162"></div>
+	        <div id="div163"></div>
+	        <div id="div164"></div>
+	        <div id="div165"></div>
+	        <div id="div166"></div>
+	        <div id="div167"></div>
+	        <div id="div168"></div>
+	        <div id="div169"></div>
+	        <div id="div170"></div>
+	        <div id="div171"></div>
+	        <div id="div172"></div>
+	        <div id="div173"></div>
+	        <div id="div174"></div>
+	        <div id="div175"></div>
+	        <div id="div176"></div>
+	        <div id="div177"></div>
+	        <div id="div178"></div>
+	        <div id="div179"></div>
+	        <div id="div180"></div>
+	        <div id="div181"></div>
+	        <div id="div182"></div>
+	        <div id="div183"></div>
+	        <div id="div184"></div>
+	        <div id="div185"></div>
+	        <div id="div186"></div>
+	        <div id="div187"></div>
+	        <div id="div188"></div>
+	        <div id="div189"></div>
+	        <div id="div190"></div>
+	        <div id="div191"></div>
+	        <div id="div192"></div>
+	        <div id="div193"></div>
+	        <div id="div194"></div>
+	        <div id="div195"></div>
+	        <div id="div196"></div>
+	        <div id="div197"></div>
+	        <div id="div198"></div>
+	        <div id="div199"></div>
+	        <div id="div200"></div>
+	        <div id="div201"></div>
+	        <div id="div202"></div>
+	        <div id="div203"></div>
+	        <div id="div204"></div>
+	        <div id="div205"></div>
+	        <div id="div206"></div>
+	        <div id="div207"></div>
+	        <div id="div208"></div>
+	        <div id="div209"></div>
+	        <div id="div210"></div>
+	        <div id="div211"></div>
+	        <div id="div212"></div>
+	        <div id="div213"></div>
+	        <div id="div214"></div>
+	        <div id="div215"></div>
+	        <div id="div216"></div>
+	        <div id="div217"></div>
+	        <div id="div218"></div>
+	        <div id="div219"></div>
+	        <div id="div220"></div>
+	        <div id="div221"></div>
+	        <div id="div222"></div>
+	        <div id="div223"></div>
+	        <div id="div224"></div>
+	        <div id="div225"></div>
+	        <div id="div226"></div>
+	        <div id="div227"></div>
+	        <div id="div228"></div>
+	        <div id="div229"></div>
+	        <div id="div230"></div>
+	        <div id="div231"></div>
+	        <div id="div232"></div>
+	        <div id="div233"></div>
+	        <div id="div234"></div>
+	        <div id="div235"></div>
+	        <div id="div236"></div>
+	        <div id="div237"></div>
+	        <div id="div238"></div>
+	        <div id="div239"></div>
+	        <div id="div240"></div>
+	        <div id="div241"></div>
+	        <div id="div242"></div>
+	        <div id="div243"></div>
+	        <div id="div244"></div>
+	        <div id="div245"></div>
+	        <div id="div246"></div>
+	        <div id="div247"></div>
+	        <div id="div248"></div>
+	        <div id="div249"></div>
+	        <div id="div250"></div>
+	        <div id="div251"></div>
+	        <div id="div252"></div>
+	        <div id="div253"></div>
+	        <div id="div254"></div>
+	        <div id="div255"></div>
+	        <div id="div256"></div>
+	        <div id="div257"></div>
+	        <div id="div258"></div>
+	        <div id="div259"></div>
+	        <div id="div260"></div>
+	        <div id="div261"></div>
+	        <div id="div262"></div>
+	        <div id="div263"></div>
+	        <div id="div264"></div>
+	        <div id="div265"></div>
+	        <div id="div266"></div>
+	        <div id="div267"></div>
+	        <div id="div268"></div>
+	        <div id="div269"></div>
+	        <div id="div270"></div>
+	        <div id="div271"></div>
+	        <div id="div272"></div>
+	        <div id="div273"></div>
+	        <div id="div274"></div>
+	        <div id="div275"></div>
+	        <div id="div276"></div>
+	        <div id="div277"></div>
+	        <div id="div278"></div>
+	        <div id="div279"></div>
+	        <div id="div280"></div>
+	        <div id="div281"></div>
+	        <div id="div282"></div>
+	        <div id="div283"></div>
+	        <div id="div284"></div>
+	        <div id="div285"></div>
+	        <div id="div286"></div>
+	        <div id="div287"></div>
+	        <div id="div288"></div>
+	        <div id="div289"></div>
+	        <div id="div290"></div>
+	        <div id="div291"></div>
+	        <div id="div292"></div>
+	        <div id="div293"></div>
+	        <div id="div294"></div>
+	        <div id="div295"></div>
+	        <div id="div296"></div>
+	        <div id="div297"></div>
+	        <div id="div298"></div>
+	        <div id="div299"></div>
+	        <div id="div300"></div>
+	    </div>
+	        <p id="info"></p>
+	<script type="text/javascript">
+		window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
+		var audioInput = document.getElementById('uploadedFile');
+		var webMusic = document.getElementById('webMusic');
+		var info = document.getElementById('info');
+		function loadSound(url) {
+		    var request = new XMLHttpRequest(); //建立一个请求
+		    request.open('GET', url, true); //配置好请求类型，文件路径等
+		    request.responseType = 'arraybuffer'; //配置数据返回类型
+		    // 一旦获取完成，对音频进行进一步操作，比如解码
+		    request.onload = function() {
+
+		        var arraybuffer = request.response;
+		        info.innerHTML = "获取数据成功";
+		        start(arraybuffer);
+		    }
+		    request.send();
+		}
+		//loadSound("QYN.mp3");
+		var file = "";
+		audioInput.onchange = function() {
+            if (audioInput.files.length !== 0) {
+                file = audioInput.files[0];
+                inputLoadSource();
+            };
+        };
+        var audioContext = new AudioContext();
+        var source = "";
+		var analyser = "";
+        var b = "";
+        var frequency_bin_count;
+        var frequency_bins;
+        var volume;
+        var HPS;
+        var HPS_MAX;
+        function start(fileResult){
+        	audioContext = new AudioContext();
+	            if (audioContext === null) {
+	                return;
+	            };
+        	audioContext.decodeAudioData(fileResult, function(buffer) {
+	                source = audioContext.createBufferSource();
+	                info.innerHTML += "<br />创建音源Source";
+		            analyser = audioContext.createAnalyser();
+		            analyser.smoothingTimeConstant = 0.3;
+					analyser.fftSize = 2048;//fftSize指定把频域空间平均分成多少份.
+		        	info.innerHTML += "<br />创建音源分析器";
+		        	source.connect(analyser);
+		        	info.innerHTML += "<br />将source与分析器连接";
+		        	analyser.connect(audioContext.destination);
+		        	info.innerHTML += "<br />将扬声器与分析器连接";
+		        	source.buffer = buffer;
+		        	source.loop = true;
+		        	info.innerHTML += "<br />buffer数据赋值给source";
+
+		        	if (!source.start) {
+			            source.start = source.noteOn //in old browsers use noteOn method
+			            source.stop = source.noteOff //in old browsers use noteOff method
+			        };
+			        source.start(0);
+			        info.innerHTML += "<br />开始播放";
+			       var play = setInterval(function(){
+					    array = new Uint8Array(analyser.frequencyBinCount);
+					    analyser.getByteFrequencyData(array); 
+					    /*分析*/
+					 //    var node = audioContext.createScriptProcessor(2048, 1, 1)
+						// node.onaudioprocess = _process(this);
+						// node.connect(audioContext.destination)
+						// analyser.connect(node);
+					
+						var a1,a2,a3,a4;
+						 var max = (function( )
+						 		{
+						 		   var i, max = array[0];
+						 		   for (i = 1; i < array.length; i++)
+						 		   {
+						 		       if (max < array[i])
+						 		       max = array[i];
+						 		   }
+						 		   return max;
+						 		})();
+							
+					    for (var i = 1; i <= 300; i++) {
+					    	a1 = array[i];
+					    	a2 = array[i*2];
+					    	a3 = array[i*3];
+					    	a4 = a1+a2+a3;
+					    	document.getElementById("div"+i).style.width =a4+"px";
+					    	//var color = 'rgb('+(255-a1)+','+(255-a2)+','+(255-a3)+')';
+					    	var color = 'hsl('+(max+i)+',60%,60%)';
+					 		document.getElementById("div"+i).style.background = color;
+					    };                  
+					},50);
+			        source.onended = function() {
+			        	info.innerHTML += "<br />播放完毕";
+					    clearInterval(play);
+					    for (var i = 1; i <= 300; i++) {
+					    	document.getElementById("div"+i).style.width =   "20px";
+					    };
+			        };
+	            }, function(e) {
+	                console.log(e);
+	            });
+        }
+        function inputLoadSource(){
+            var fr = new FileReader();
+            info.innerHTML = "文件获取成功";
+            fr.onload = function(e) {
+	            var fileResult = e.target.result;
+	            info.innerHTML = "文件转换成功";
+	            start(fileResult);
+	            
+	        };
+        	fr.readAsArrayBuffer(file);
+        }
+
+        
+        
+		var _process = function() {
+	      var arr, b, f, i, max_downsample, max_hz, max_i, n, value, _i, _j, _ref, _ref1;
+	      frequency_bin_count = n = analyser.frequencyBinCount;
+	      frequency_bins = arr = new Uint8Array(n);
+	      analyser.getByteFrequencyData(arr);
+	      volume = _.reduce(arr, (function(sum, i) {
+	        return sum + i;
+	      }), 0);
+	      volume /= n;
+	      HPS = [];
+	      HPS_MAX = 0;
+	      max_downsample = 5;
+	      max_i = 0;
+	      for (i = _i = 0, _ref = n - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+	        if (i < 0) {
+	          value = 0;
+	        } else {
+	          value = i;
+	          for (f = _j = 2; 2 <= max_downsample ? _j <= max_downsample : _j >= max_downsample; f = 2 <= max_downsample ? ++_j : --_j) {
+	            b = (_ref1 = arr[i * f]) != null ? _ref1 : 0;
+	            value *= b;
+	          }
+	        }
+	        HPS_MAX = Math.max(value, HPS_MAX);
+	        if (HPS_MAX === value) {
+	          max_i = i;
+	        }
+	        HPS.push(value);
+	        console.log(HPS_MAX)
+	      }
+	      return max_hz = audioContext.sampleRate / n * max_i;
+	    };
+
+	    
+		// var n = analyser.frequencyBinCount;
+		// var arr = new Uint8Array(n);
+		// analyser.getByteFrequencyData(arr);
+
+	</script>
+</body>
+</html>

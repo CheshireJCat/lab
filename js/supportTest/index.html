@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<title>支持性测试</title>
+	<script type="text/javascript" src="modernizr.js"></script>
+	<style type="text/css">article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block;}</style>
+	<!-- I wish I was there -->
+</head>
+<body>
+	<header><h1><header>支持性测试</header></h1></header>
+	<label>需要测试属性<input type="text" id="testText"><button id="startTest">test</button></label>
+	<p id="res"></p>
+	<hr>
+	<div id="allvalues"></div>
+	<footer><h2>footer</h2></footer>
+	<script type="text/javascript">
+		var dom = document.getElementById("allvalues"),
+				html = document.getElementsByTagName('html')[0],
+				classes = html.className,
+				n = [],s = [];
+		(function(){
+			classes = classes.split(/\s/g).sort();
+			if(Modernizr.es5array){
+				noClasses = classes.forEach(function(e, i){
+					/^no/gi.test(e) ?n.push(e):s.push(e);
+				});
+			}else{
+				for (var i = 0; i < classes.length; i++) {
+					/^no/gi.test(classes[i])?n.push(classes[i]):s.push(classes[i]);
+				}
+			}
+			dom.innerHTML = n.join('<br>') +'<hr>'+ s.join('<br>');
+		})();
+
+		var testBtn = document.getElementById("startTest"),
+			res = document.getElementById("res");
+		var time = new Date();
+		testText.onkeyup = function(){
+			var t = new Date();
+			if(t-time>200){
+				time = t;
+				var value = document.getElementById("testText").value;
+				var re = new RegExp(value,'gi');
+				var arr = [];
+				for (var i = 0; i < classes.length; i++) {
+					re.test(classes[i])?arr.push(classes[i]):'';
+				}
+				res.innerHTML = arr.join('<br>');
+			}else{
+				time = t;	
+			}
+		};
+	</script>
+</body>
+</html>

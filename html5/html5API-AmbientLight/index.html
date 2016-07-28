@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>环境光传感器</title>
+</head>
+<body>
+<dl>
+	<dt>光强度数值</dt>
+	<dd id="lightValue"></dd>
+	<dt>物体靠近</dt>
+	<dd id="inProximity"></dd>
+</dl>
+	<script type="text/javascript">
+		if (window.ondevicelight) {
+		    window.addEventListener('devicelight', function(event) {
+		        // 获取光强度数值
+		        document.getElementById('lightValue').innerHTML = Math.round(event.value);
+		    });
+		}else{
+			alert("不支持获取光强度数值");
+		}
+
+		
+	</script>
+</body>
+</html>

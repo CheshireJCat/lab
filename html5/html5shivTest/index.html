@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>html5shiv-html5标签</title>
+		<script type="text/javascript" src="../lib/html5shiv/html5shiv.js"></script>
+		<style type="text/css">article,aside,dialog,footer,header,section,footer,nav,figure,menu,main
+{display:block;border:1px solid #ddd;margin:20px auto;}</style>
+	</head>
+	<body>
+		<header>
+			<hgroup>
+				<h1>header</h1>
+				<h1>网站副标题</h1>
+			</hgroup>
+		</header>
+		<nav>nav</nav>
+		<main>
+			<h1>main</h1>
+			<article>
+				<section>section</section>
+			</article>
+			<figure>
+				<img src="http://dummyimage.com/300x200/4d494d/686a82.gif&text=figure" alt="figure">
+				<figcaption>这儿是图片的描述信息</figcaption>
+			</figure>
+			<p>The <abbr title="People's Republic of China">PRC 鼠标移到这里看看</abbr> was founded in 1949.</p>
+			<aside>
+				<h1>aside</h1>
+				<p>厚德IT</p>
+			</aside>
+			<dialog>
+				<h4>dialog</h4>
+			  <dt>老师</dt>
+			  <dd>2+2 等于？</dd>
+			  <dt>学生</dt>
+			  <dd>4</dd>
+			  <dt>老师</dt>
+			  <dd>答对了！</dd>
+			</dialog>
+			<h1>datalist 提示输入</h1>
+			<input list="cars" />
+			<datalist id="cars">
+				<option value="BMW">
+				<option value="这是什么">
+				<option value="Volvo">
+			</datalist>
+			<p>Do not forget to buy <mark>mark</mark> today.</p>
+			<h1>meter</h1>
+			<meter value="3" min="0" max="10">3/10</meter><br>
+			<meter value="0.6">60%</meter>
+			<h1>progress</h1>
+			<progress value="22" max="100"></progress>
+			<details>
+			<summary>HTML 5</summary>
+			This document teaches you everything you have to learn about HTML 5.
+			</details>
+
+			<div style="background:yellow;border:1px solid #cccccc;padding: 10px;" contextmenu="mymenu">
+				<p>menuitem-请在框中右键点击，就可以看到快捷菜单！</p>
+				<menu type="context" id="mymenu">
+				  <menuitem label="Refresh" onclick="window.location.reload();" icon="ico_reload.png"></menuitem>
+				  <menu label="Share on...">
+				    <menuitem label="Twitter" icon="ico_twitter.png" onclick="window.open('//twitter.com/intent/tweet?text=' + window.location.href);"></menuitem>
+				    <menuitem label="Facebook" icon="ico_facebook.png" onclick="window.open('//facebook.com/sharer/sharer.php?u=' + window.location.href);"></menuitem>
+				  </menu>
+				  <menuitem label="Email This Page" onclick="window.location='mailto:?body='+window.location.href;"></menuitem>
+				</menu>
+			</div>
+		</main>
+
+		<footer>footer</footer>
+</body>
+</html>

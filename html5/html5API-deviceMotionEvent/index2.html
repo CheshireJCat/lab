@@ -1,0 +1,31 @@
+<style type="text/css">
+body { perspective: 2000px; transform-style: preserve-3d; }
+#box { width: 600px; height: 600px; margin: 0 auto; transition: all 0.1s; }
+.box { position: relative; margin: 0 auto; width: 100%; height: 100%; transform-style: preserve-3d; animation: rotate 10s infinite; font-size: 400px;text-align:center;line-height:600px;}
+.face { position: absolute; opacity: .6; width: 100%; height: 100%; box-shadow: 0 0 5px 5px #ddd; backface-visibility: visible; }
+.box .one { background-color: #F5D349; transform: rotateX(90deg) translateZ(300px); }
+.box .two { background-color: #ff6970; transform: translateZ(300px); }
+.box .three { background: #3F4DE6; transform: rotateY(90deg) translateZ(300px); }
+.box .four { background: #32E847; transform: rotateY(180deg) translateZ(300px); }
+.box .five { background: #D572E8; transform: rotateY(-90deg) translateZ(300px); }
+.box .six { background: #EA540F; transform: rotateX(-90deg) translateZ(300px) rotate(180deg); }
+@keyframes rotate{
+    100%{
+        transform:rotateX(360deg) rotateY(360deg);
+    }
+}
+</style>
+<div id="box" class="box">
+    <div class="face one" id="one">1
+    </div>
+    <div class="face two" id="two">2
+    </div>
+    <div class="face three" id="three">3
+    </div>
+    <div class="face four" id="four">4
+    </div>
+    <div class="face five" id="five">5
+    </div>
+    <div class="face six" id="six">6
+    </div>
+</div>

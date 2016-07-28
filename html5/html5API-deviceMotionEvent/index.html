@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>传感器测试</title>
+    <style type="text/css">
+    body {
+        perspective: 500px;
+        transform-style: preserve-3d;
+    }
+    
+    #box {
+        width: 200px;
+        height: 200px;
+        margin: 20px auto;
+        transition: all 0.1s;
+    }
+    
+    .box {
+        position: relative;
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        animation: rotate 4s infinite;
+    }
+    
+    .face {
+        position: absolute;
+        opacity: .6;
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 0 5px 5px #ddd;
+        backface-visibility: visible;
+    }
+    
+    .box .one {
+        background-color: #F5D349;
+        transform: rotateX(90deg) translateZ(120px);
+    }
+    
+    .box .two {
+        background-color: #ff6970;
+        transform: translateZ(120px);
+    }
+    
+    .box .three {
+        background: #3F4DE6;
+        transform: rotateY(90deg) translateZ(120px);
+    }
+    
+    .box .four {
+        background: #32E847;
+        transform: rotateY(180deg) translateZ(120px);
+    }
+    
+    .box .five {
+        background: #D572E8;
+        transform: rotateY(-90deg) translateZ(120px);
+    }
+    
+    .box .six {
+        background: #EA540F;
+        transform: rotateX(-90deg) translateZ(120px) rotate(180deg);
+    }
+    
+    .ball {
+        width: 20px;
+        height: 20px;
+        background-color: #000;
+        box-shadow: 0 0 5px 5px red;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        transition: all 1s ease-in;
+    }
+    </style>
+</head>
+
+<body>
+    <div>
+        <dl>
+            <dt>加速度传感器</dt>
+            <dd>加速值<span id="result"></span></dd>
+        </dl>
+        <dl>
+            <dt>重力感应</dt>
+            <dd>指示方向<span id="DeviceOrientationHandler_alpha"></span></dd>
+            <dd>x轴角度<span id="DeviceOrientationHandler_beta"></span></dd>
+            <dd>y轴角度<span id="DeviceOrientationHandler_gamma"></span></dd>
+            <dd id="DeviceOrientationHandler_y"></dd>
+            <dd id="DeviceOrientationHandler_x"></dd>
+        </dl>
+    </div>
+    <div id="box" class="box">
+        <div class="face one">
+        </div>
+        <div class="face two">
+        </div>
+        <div class="face three">
+        </div>
+        <div class="face four">
+        </div>
+        <div class="face five">
+        </div>
+        <div class="face six">
+        </div>
+    </div>
+    <div id="ball" class="ball"></div>
+    <script type="text/javascript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+
+    function Shake(threshold, callback) {
+        this.SHAKE_THRESHOLD = threshold ? threshold : 2000;
+        //定义阈值
+        this.last_update = 0;
+        this.x = this.y = this.z = this.last_x = this.last_y = this.last_z = 0;
+        this.init = function() {
+            if (window.DeviceMotionEvent) {
+                window.addEventListener('devicemotion', this.deviceMotionHandler, false);
+            } else {
+                alert('您的浏览器不支持DeviceMotion');
+            }
+        };
+        var that = this;
+        this.deviceMotionHandler = function(eventData) {
+            var acceleration = eventData.accelerationIncludingGravity;
+            var curTime = new Date().getTime();
+            if ((curTime - that.last_update) > 100) {
+                var diffTime = curTime - that.last_update;
+                that.last_update = curTime;
+                that.x = acceleration.x;
+                that.y = acceleration.y;
+                that.z = acceleration.z;
+                var speed = Math.abs(that.x + that.y + that.z - that.last_x - that.last_y - that.last_z) / diffTime * 10000;
+                if (speed > that.SHAKE_THRESHOLD) {
+                    if (window.console && console.log) {
+                        console.log("shaked");
+                    }
+                    if (callback != undefined) {
+                        callback(that);
+                    }
+                }
+                that.last_x = that.x;
+                that.last_y = that.y;
+                that.last_z = that.z;
+            }
+        }
+    };
+    var ballstyle = 'translate3d({tx}px,{ty}px,{tz}px)',
+        tb;
+    window.onload = function() {
+        var shake1 = new Shake(5000, function(obj) {
+            //alert("shaked");
+            var r = document.getElementById("result");
+            tb = ballstyle.replace(/{tx}/, obj.x * 5).replace(/{ty}/, obj.y * 5).replace(/{tz}/, obj.z * 5);
+            r.innerHTML = "<br>" + "x:" + obj.x　 + "<br>";
+            r.innerHTML += "y:" + obj.y　 + "<br>";
+            r.innerHTML += "z:" + obj.z　 + "<br>";
+
+            $('ball').style.transform = tb;
+        });
+        shake1.init();
+    };
+
+    if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', DeviceOrientationHandler, false);
+    } else {
+        alert("您的浏览器不支持DeviceOrientation");
+    }
+    var transform = 'rotateX({x}deg) rotateY({y}deg)',
+        t;
+    // rotateZ({z}deg)
+    function DeviceOrientationHandler(event) {
+        var alpha = event.alpha,
+            beta = event.beta,
+            gamma = event.gamma;
+        if (alpha != null || beta != null || gamma != null) {
+            $('DeviceOrientationHandler_alpha').innerHTML = alpha;
+            $('DeviceOrientationHandler_beta').innerHTML = beta;
+            $('DeviceOrientationHandler_gamma').innerHTML = gamma;
+            t = transform.replace(/{x}/g, beta).replace(/{y}/g, -gamma)
+                //.replace(/{z}/g,-alpha);
+            $("box").style.transform = t;
+            if (gamma > 0) {
+                $("DeviceOrientationHandler_y").innerHTML = "向右倾斜";
+            } else {
+                $("DeviceOrientationHandler_y").innerHTML = "向左倾斜";
+            }
+            if (beta > 0) {
+                $("DeviceOrientationHandler_x").innerHTML = "向前倾斜";
+            } else {
+                $("DeviceOrientationHandler_x").innerHTML = "向后倾斜";
+            }
+        } else {
+            //alert("当前浏览器不支持DeviceOrientation");
+        }
+    }
+    </script>
+</body>
+
+</html>
