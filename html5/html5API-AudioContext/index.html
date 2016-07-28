@@ -7,12 +7,13 @@
 <body>
 	<!-- <audio id="audio" src="QYN.mp3" autoplay controls></audio> -->
 	        <input type="file" id="uploadedFile">
-	        <input type="text" id="webMusic">
-	        <input type="button" onclick="loadSound('QYN.mp3')" value="读取示例音乐">
+	        <input type="text" id="webMusic" hidden>
+	        <input type="button" onclick="loadSound('http://ob0qcsukh.bkt.clouddn.com/html5/html5API-AudioContext/QYN.mp3')" value="读取示例音乐">
 	        <style type="text/css">
 	        	body{background-color: #000;color:#fff;}
 		        #box div{width:0;height:5px;background:#fff;border-radius:0 30% 30% 0;transition: all 0.1s;}
 		        #box{transform:rotate(-90deg) translateX(-700px) translateY(100px);transform-origin: 0 0;width: 200px;}
+		        #info{position: fixed;top: 20px;left: 0;}
 	        </style>
 	    <div id="box">
 	        <div id="div1"></div>
@@ -316,13 +317,14 @@
 	        <div id="div299"></div>
 	        <div id="div300"></div>
 	    </div>
-	        <p id="info"></p>
+	        <p id="info">123124</p>
 	<script type="text/javascript">
 		window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
 		var audioInput = document.getElementById('uploadedFile');
 		var webMusic = document.getElementById('webMusic');
 		var info = document.getElementById('info');
 		function loadSound(url) {
+			info.innerHTML = "正在获取数据...";
 		    var request = new XMLHttpRequest(); //建立一个请求
 		    request.open('GET', url, true); //配置好请求类型，文件路径等
 		    request.responseType = 'arraybuffer'; //配置数据返回类型
@@ -332,6 +334,10 @@
 		        var arraybuffer = request.response;
 		        info.innerHTML = "获取数据成功";
 		        start(arraybuffer);
+		    }
+		    request.onprogress = function(request){
+		    	var percentComplete = request.loaded / request.total * 100;
+            	info.innerHTML = Math.round(percentComplete, 2) + '% downloaded';
 		    }
 		    request.send();
 		}
@@ -378,6 +384,9 @@
 			        };
 			        source.start(0);
 			        info.innerHTML += "<br />开始播放";
+			        setTimeout(function(){
+			        	info.innerHTML = "";
+			        });
 			       var play = setInterval(function(){
 					    array = new Uint8Array(analyser.frequencyBinCount);
 					    analyser.getByteFrequencyData(array); 
