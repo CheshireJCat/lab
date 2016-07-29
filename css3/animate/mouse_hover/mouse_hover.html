@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="frame hover">
+		<a id="a1" href="#x"></a>
+		<a id="a2" href="#x"></a>
+		<a id="a3" href="#x"></a>
+		<a id="a4" href="#x"></a>
+		<a id="a5" href="#x"></a>
+		<a id="a6" href="#x"></a>
+		<a id="a7" href="#x"></a>
+		<a id="a8" href="#x"></a>
+		<a id="a9" href="#x"></a>
+		<a id="a10" href="#x"></a>
+		<a id="a11" href="#x"></a>
+	</div>
+	<style type="text/css">
+	
+		.frame {position:relative; border:1px solid #ddd; width:512px; height:384px; margin:0 auto;}
+
+		.frame a {display:block; outline:0; position: absolute; left:0; top:0; width: 512px; height: 384px;
+			-webkit-transition: z-index 0.1s linear;
+			-moz-transition: z-index 0.1s linear;
+			-o-transition: z-index 0.1s linear;
+			transition: z-index 0.1s linear;
+		}
+
+		.frame a#a1 {background:url(img/z1.gif);}
+		.frame a#a2 {background:url(img/z2.gif);}
+		.frame a#a3 {background:url(img/z3.gif);}
+		.frame a#a4 {background:url(img/z4.gif);}
+		.frame a#a5 {background:url(img/z5.gif);}
+		.frame a#a6 {background:url(img/z6.gif);}
+		.frame a#a7 {background:url(img/z7.gif);}
+		.frame a#a8 {background:url(img/z8.gif);}
+		.frame a#a9 {background:url(img/z9.gif);}
+		.frame a#a10 {background:url(img/z10.gif);}
+		.frame a#a11 {background:url(img/z11.gif);}
+
+		.hover a:hover {z-index: 20;}
+		.hover a:hover + a {z-index: 30;}
+		.hover a#a1 {z-index: 20;}
+		.hover a#a11:hover {z-index:10;}
+	</style>
+</body>
+</html>

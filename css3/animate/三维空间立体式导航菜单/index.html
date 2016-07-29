@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>三维空间立体式导航菜单</title>
+<link rel="stylesheet" href="css/lanrenzhijia.css">
+</head>
+<body>
+<!-- 代码部分begin -->
+<div class="meny">
+  <h2>More Experiments</h2>
+  <ul>
+    <li><a href="#">Avgrund</a></li>
+    <li><a href="#">Radar</a></li>
+    <li><a href="#">forkit.js</a></li>
+    <li><a href="#">stroll.js</a></li>
+    <li><a href="#">zoom.js</a></li>
+    <li><a href="#">reveal.js</a></li>
+    <li><a href="#">Sinuous for iOS</a></li>
+    <li><a href="#">DOM Tree</a></li>
+    <li><a href="#">Holobox</a></li>
+    <li><a href="#">404</a></li>
+  </ul>
+</div>
+<div class="meny-arrow"></div>
+<div class="contents">
+  <article>
+    <h1>Meny</h1>
+    <p> A three dimensional and space efficient menu. </p>
+    <p> Move your mouse towards the arrow &mdash; or swipe in from the arrow if you're on a touch device &mdash; to open.
+      Test it with any page by appending a URL, like so: <a href="#">lab.hakim.se/meny/?u=http://hakim.se.</a> </p>
+    <p> Meny can be positioned on any side of the screen: <br>
+      <a href="#">top</a> - <a href="#">right</a> - <a href="#">bottom</a> - <a href="#">left</a> </p>
+    <p> Instructions and download at <a href="#">github.com/hakimel/meny</a>. </p>
+    <p> The name, <em>Meny</em>, is swedish. </p>
+    <small> Created by <a href="#">@hakimel</a> / <a href="#">http://hakim.se</a> </small> </article>
+  <div class="sharing"> <a href="#" class="twitter-share-button" data-text="lanrenzhijia" data-url="#" data-count="small" data-related="hakimel"></a> </div>
+</div>
+<script src="js/meny.min.js"></script>
+<script>
+	var meny = Meny.create({
+		menuElement: document.querySelector( '.meny' ),
+		contentsElement: document.querySelector( '.contents' ),
+		position: Meny.getQuery().p || 'left',
+		height: 200,
+		width: 260,
+		threshold: 40,
+		mouse: true,
+		touch: true
+	});
+	if( Meny.getQuery().u && Meny.getQuery().u.match( /^http/gi ) ) {
+		var contents = document.querySelector( '.contents' );
+		contents.style.padding = '0px';
+		contents.innerHTML = '<div class="cover"></div><iframe src="'+ Meny.getQuery().u +'" style="width: 100%; height: 100%; border: 0; position: absolute;"></iframe>';
+	}
+</script>
+<!-- 代码部分end -->
+</body>
+</html>
