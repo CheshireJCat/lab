@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>打字效果测试</title>
+    <link rel="stylesheet" type="text/css" href="/lab/stylesheets/stylesheet.css" media="screen">
+    <style type="text/css">
+    @keyframes typing {
+        from {
+            width: 0;
+        }
+    }
+    
+    @keyframes blink-caret {
+        0%{
+        	 border-color: #fff;
+        }
+        50%{
+        	 border-color: transparent;
+        }
+    }
+    @keyframes show{
+    	from{
+    		opacity:0;
+    	}
+    	to{
+    		opacity:1;
+    	}
+    }
+    
+    p {
+        font: bold 16px Consolas, Monaco, monospace;
+        border-right: .1em solid;
+        margin: 2em 1em;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .p1{
+    	width: 54ch;
+    	animation: typing 15s 0s steps(54, end), blink-caret .5s step-start 30 alternate forwards;
+    }
+    .p2{
+    	width: 57ch;
+    	opacity:0;
+    	animation: typing 15s 15s steps(57, end), blink-caret .5s 15s step-start infinite alternate,show .5s 15s forwards;
+    }
+    </style>
+</head>
+<body>
+	<p class="p1">The world puts off its mask of vastness to its lover.</p>
+	<p class="p2">It becomes small as one song, as one kiss of the eternal.</p>
+
+    <script type="text/javascript" src="/lab/javascripts/common.js"></script>
+</body>
+
+</html>
