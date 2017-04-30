@@ -13,24 +13,14 @@
 </head>
 
 <body data-pinterest-extension-installed="cr1.39.2">
-    <!-- <script src="./js/three.js"></script>
-    <script src="./js/charsetencoder.min.js"></script>
-    <script src="./js/ammo.js"></script>
-    <script src="./js/TGALoader.js"></script>
-    <script src="./js/MMDLoader.js"></script>
-    <script src="./js/CCDIKSolver.js"></script>
-    <script src="./js/MMDPhysics.js"></script>
-    <script src="./js/Detector.js"></script>
-    <script src="./js/stats.min.js"></script>
-    <script src="./js/dat.gui.min.js"></script> -->
     <script src="//cdn.bootcss.com/three.js/r79/three.min.js"></script>
-    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/charsetencoder.min.js"></script>
-    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/ammo.js"></script>
-    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/TGALoader.js"></script>
-    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/MMDLoader.js"></script>
-    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/CCDIKSolver.js"></script>
-    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/MMDPhysics.js"></script>
-    <script src="http://ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/Detector.js"></script>
+    <script src="//ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/charsetencoder.min.js"></script>
+    <script src="//ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/ammo.js"></script>
+    <script src="//ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/TGALoader.js"></script>
+    <script src="//ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/MMDLoader.js"></script>
+    <script src="//ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/CCDIKSolver.js"></script>
+    <script src="//ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/MMDPhysics.js"></script>
+    <script src="//ob0qcsukh.bkt.clouddn.com/canvas/mmd2/js/Detector.js"></script>
     <script src="//cdn.bootcss.com/stats.js/r16/Stats.min.js"></script>
     <script src="//cdn.bootcss.com/dat-gui/0.5.1/dat.gui.min.js"></script>
     <script>
@@ -69,7 +59,8 @@
         directionalLightColor: '#CCCCCC',
         modelFile: {
             tda: fontLink+'models/role/mikuTheWorldIsMime/1.pmd',
-            sms: fontLink+'models/role/miku9/1.pmx'
+            sms: fontLink+'models/role/miku9/1.pmx',
+            kizunaai: fontLink+'models/role/kizunaai/kizunaai.pmx',
         },
         vmdFiles: {
             elysion: [fontLink+'models/vmd/elysion2.vmd'],
@@ -160,7 +151,7 @@
             };
         }
 
-        var modelFile = _op && _op.modelFile || op.modelFile.tda;
+        var modelFile = _op && _op.modelFile || op.modelFile.kizunaai;
         var vmdFiles = _op && _op.vmdFiles || op.vmdFiles.elysion;
         vmdFiles = vmdFiles.slice();
         if (typeof vmdFiles == 'string') {
