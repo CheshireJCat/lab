@@ -313,20 +313,20 @@
     var mmdData = new function() {
         this.ambientColor = op.ambientColor;
         this.directionalLightColor = op.directionalLightColor;
-        this.modelFile = op.modelFile;
-        this.vmdFiles = op.vmdFiles;
-        this.audioFile = op.audioFile;
-        this.cameraFiles = op.cameraFiles;
+        this.modelFile = op.modelFile.kizunaai;
+        this.vmdFiles = op.vmdFiles.elysion;
+        this.audioFile = op.audioFile.elysion;
+        this.cameraFiles = op.cameraFiles.elysion;
         this.callback = sf.play;
     };
 
     var gui2 = new dat.GUI();
     gui2.addColor(mmdData, 'ambientColor', mmdData.ambientColor);
     gui2.addColor(mmdData, 'directionalLightColor', mmdData.directionalLightColor);
-    gui2.add(mmdData, 'modelFile', mmdData.modelFile);
-    gui2.add(mmdData, 'vmdFiles', mmdData.vmdFiles);
-    gui2.add(mmdData, 'audioFile', mmdData.audioFile, mmdData.audioFile.goodbyeTears);
-    gui2.add(mmdData, 'cameraFiles', mmdData.cameraFiles);
+    gui2.add(mmdData, 'modelFile', op.modelFile);
+    gui2.add(mmdData, 'vmdFiles', op.vmdFiles);
+    gui2.add(mmdData, 'audioFile', op.audioFile, op.audioFile.goodbyeTears);
+    gui2.add(mmdData, 'cameraFiles', op.cameraFiles);
 
     var mmdPlayBtn = document.createElement('li');
     mmdPlayBtn.innerHTML = 'Player MMD';
